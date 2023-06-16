@@ -1,47 +1,59 @@
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import BackBtn from '../components/BackBtn';
 import Title from '../components/Title';
 import Explanation from '../components/Explanation';
-import ConfigBtn from '../components/ConfigBtn';
+import NextBtn from '../components/NextBtn';
 import Icecream from '../components/Icecream';
 
 const SelectIcecream = () => {
+
+  const navigation = useNavigation();
+
+  const receiverName = '산타할아버지'; // string = props.receiverName
+  const [selectedIcecream, setSelectedIcecream] = useState(null);
+  const handleIcecreamSelect = (iceType) => {
+    setSelectedIcecream(prev => prev === iceType ? null : iceType);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerTop1}>
-        <BackBtn src='prevPage source'></BackBtn>
+        <BackBtn type='goToSelectLetter' onPress={() => navigation.navigate('SelectIcecreamPage')}></BackBtn>
       </View>
       <View style={styles.containerTop2}>
-
         <Title title='아이스크림 선택'></Title>
-        <Explanation nickname='우직한머슴' contents='에게 어떤 아이스크림을 보낼까?'></Explanation>
+        <Explanation nickname={receiverName} contents='에게 어떤 아이스크림을 보낼까?'></Explanation>
       </View>
       <View style={styles.containerMid}>
         <View style={styles.containerMidInner}>
           <View style={styles.containerIce}>
-            <Icecream iceType={'ice01'} />
-            <Icecream iceType={'ice02'} />
-            <Icecream iceType={'ice03'} />
+            <Icecream iceType={'ice01'} selected={selectedIcecream === 'ice01'} onPress={handleIcecreamSelect} />
+            <Icecream iceType={'ice02'} selected={selectedIcecream === 'ice02'} onPress={handleIcecreamSelect} />
+            <Icecream iceType={'ice03'} selected={selectedIcecream === 'ice03'} onPress={handleIcecreamSelect} />
           </View>
           <View style={styles.containerIce}>
-            <Icecream iceType={'ice04'} />
-            <Icecream iceType={'ice05'} />
-            <Icecream iceType={'ice06'} />
+            <Icecream iceType={'ice04'} selected={selectedIcecream === 'ice04'} onPress={handleIcecreamSelect} />
+            <Icecream iceType={'ice05'} selected={selectedIcecream === 'ice05'} onPress={handleIcecreamSelect} />
+            <Icecream iceType={'ice06'} selected={selectedIcecream === 'ice06'} onPress={handleIcecreamSelect} />
           </View>
           <View style={styles.containerIce}>
-            <Icecream iceType={'ice07'} />
-            <Icecream iceType={'ice08'} />
-            <Icecream iceType={'ice09'} />
+            <Icecream iceType={'ice07'} selected={selectedIcecream === 'ice07'} onPress={handleIcecreamSelect} />
+            <Icecream iceType={'ice08'} selected={selectedIcecream === 'ice08'} onPress={handleIcecreamSelect} />
+            <Icecream iceType={'ice09'} selected={selectedIcecream === 'ice09'} onPress={handleIcecreamSelect} />
           </View>
 
         </View>
       </View>
       <View style={styles.containerBottom}>
-        <ConfigBtn title='선택완료' ></ConfigBtn>
+        <NextBtn title='선택완료' type='goToWriteLetter' onPress={() => navigation.navigate('WriteLetterPage', { receiverName, selectedIcecream })} ></NextBtn>
       </View>
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -2,21 +2,21 @@ import { StatusBar } from 'expo-status-bar';
 
 import { StyleSheet, View } from 'react-native';
 
-import WriteLetterScreen from './sreens/WriteLetterScreen'
-//import SelectIcecream from './sreens/SelectIcecream'
-
+// import WriteLetterScreen from './screens/WriteLetterScreen'
+//import SelectIcecream from './screens/SelectIcecream'
+import ConfigLetterScreen from './sendpage/screens/ConfigLetterScreen'
 
 export default function App() {
   // eslint-disable-next-line no-undef
 
   return (
     <View style={styles.container}>
-      
-   
+
+      <ConfigLetterScreen></ConfigLetterScreen>
       {/* <SelectIcecream /> */}
-      <WriteLetterScreen/>
+      {/* <WriteLetterScreen/> */}
       <StatusBar style="auto" />
-      
+
     </View>
   );
 }

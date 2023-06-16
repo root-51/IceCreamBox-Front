@@ -1,33 +1,37 @@
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import BackBtn from '../components/BackBtn';
 import Title from '../components/Title';
 import Explanation from '../components/Explanation';
-import ConfigBtn from '../components/ConfigBtn';
+import NextBtn from '../components/NextBtn';
 import RedBorderBox from '../components/RedBorderBox'; import { useState } from 'react';
-const WriteLetterScreen = () => {
+
+// eslint-disable-next-line react/prop-types
+const WriteLetterScreen = ({ route }) => {
+  const navigation = useNavigation();
+  // eslint-disable-next-line react/prop-types
+  const { receiverName, selectedIcecream } = route.params; // get the selected ice cream
+
   const [writer, setWriter] = useState('');
   const [letter, setLetter] = useState('');
-  const letterTest = () => {
-    console.log(writer)
-    console.log(letter)
-  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerTop1}>
-        <BackBtn src='prevPage source'></BackBtn>
+        <BackBtn type='goToSelectLetter' onPress={() => navigation.navigate('SelectIcecreamPage')}></BackBtn>
       </View>
       <View style={styles.containerTop2}>
 
         <Title title='아이스크림 선택'></Title>
-        <Explanation nickname='우직한머슴' contents='에게 아이스크림과 함께 전할 말이 있나요?'></Explanation>
+        <Explanation nickname={receiverName} contents='에게 아이스크림과 함께 전할 말이 있나요?'></Explanation>
       </View>
       <View style={styles.containerMid}>
-        <RedBorderBox type='img' style={styles.minItem}></RedBorderBox>
+        <RedBorderBox type='img' iceType={selectedIcecream} style={styles.minItem}></RedBorderBox>
         <RedBorderBox
           type='TextField'
           style={styles.minItem}
           value={writer}
-          onChangeText={(text) => setWriter(text)}  // 수정된 부분
+          onChangeText={(text) => setWriter(text)}
         >
         </RedBorderBox>
         <View style={{ width: '100%' }}>
@@ -35,14 +39,21 @@ const WriteLetterScreen = () => {
             type='TextArea'
             style={styles.minItem}
             value={letter}
-            onChangeText={(text) => setLetter(text)}  // 수정된 부분
+            onChangeText={(text) => setLetter(text)}
           ></RedBorderBox>
         </View>
 
       </View>
 
       <View style={styles.containerBottom}>
-        <ConfigBtn title='보내기' onPress={letterTest}></ConfigBtn>
+        <NextBtn title='보내기' type='goToConfigLetter'
+          onPress={() => navigation.navigate('ConfigLetterScreenPage', {
+            receiverName: receiverName,
+            writer: writer,
+            letter: letter,
+            iceType: selectedIcecream,
+          })}></NextBtn>
+        {/* <ConfigBtn title='보내기' onPress={()=>navigation.navigate('WriteLetterPage')} writer = {writer}></ConfigBtn> */}
       </View>
     </View>
 

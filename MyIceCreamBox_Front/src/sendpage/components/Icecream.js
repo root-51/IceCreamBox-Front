@@ -3,54 +3,56 @@ import { StyleSheet, View, Image, Pressable } from 'react-native';
 import PropTypes from 'prop-types';
 const Icecream = (props) => {
 
-  
+  const { iceType, selected, onPress } = props;
   var iceName = '슈파두바';
-  var iceSrc= require('../../assets/img/ice01.png');
+  var iceSrc= require('../../../assets/imgsForSendpage/ice01.png');
   switch (props.iceType) {
     case 'ice01':
-      iceSrc= require('../../assets/img/ice01.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice01.png');
       iceName = '이거먹으면나랑사귀는바';
       break;
     case 'ice02':
-      iceSrc= require('../../assets/img/ice02.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice02.png');
       iceName = '이거먹으면에이쁠받는바';
       break;
     case 'ice03':
-      iceSrc= require('../../assets/img/ice03.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice03.png');
       iceName = '이거먹으면안돼바';
       break;
     case 'ice04':
-      iceSrc= require('../../assets/img/ice04.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice04.png');
       iceName = '흑마법사가만든저체온증바';
       break;
     case 'ice05':
-      iceSrc= require('../../assets/img/ice05.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice05.png');
       iceName = '쿨복숭아쌍쌍바';
       break;
     case 'ice06':
-      iceSrc= require('../../assets/img/ice06.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice06.png');
       iceName = '초콜릿태닝쌍쌍바';
       break;
     case 'ice07':
-      iceSrc= require('../../assets/img/ice07.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice07.png');
       iceName = '물고기도반한에어콘';
       break;
     case 'ice08':
-      iceSrc= require('../../assets/img/ice08.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice08.png');
       iceName = '여름이온지얼마나오렌지콘';
       break;
     case 'ice09':
-      iceSrc= require('../../assets/img/ice09.png');
+      iceSrc= require('../../../assets/imgsForSendpage/ice09.png');
       iceName = '베리베리더워콘';
       break;
 
   }
-  const confingTest = () => {
-    console.log(iceName);
+
+  const handlePress = () => {
+    onPress(iceType);
+    console.log(iceName)
   }
   return (
-    <View>
-      <Pressable onPress={() => confingTest()}>
+    <View style={selected ? styles.selected : null}>
+      <Pressable onPress={handlePress}>
         <Image source={iceSrc} style={styles.ice} />
       </Pressable>
     </View>
@@ -58,6 +60,8 @@ const Icecream = (props) => {
 };
 Icecream.propTypes = {
   iceType: PropTypes.string,
+  selected: PropTypes.bool,
+  onPress: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
@@ -73,7 +77,11 @@ const styles = StyleSheet.create({
     marginVertical: -60,
     width: 70,
     resizeMode: 'contain',
-  }
+  },
+  selected: {
+    backgroundColor: 'grey',
+    borderRadius:20,  
+  },
 
 
 });
