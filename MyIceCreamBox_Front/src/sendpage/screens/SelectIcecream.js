@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useNavigation,useFocusEffect } from '@react-navigation/native';
+import { useState,useCallback } from 'react';
+import { Alert,StyleSheet, View } from 'react-native';
 import BackBtn from '../components/BackBtn';
 import Title from '../components/Title';
 import Explanation from '../components/Explanation';
@@ -16,6 +16,13 @@ const SelectIcecream = () => {
   const handleIcecreamSelect = (iceType) => {
     setSelectedIcecream(prev => prev === iceType ? null : iceType);
   }
+  useFocusEffect(
+    // eslint-disable-next-line no-undef
+    useCallback(() => {
+      // this will be executed when the screen is focused
+      setSelectedIcecream(null);
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -47,7 +54,13 @@ const SelectIcecream = () => {
         </View>
       </View>
       <View style={styles.containerBottom}>
-        <NextBtn title='선택완료' type='goToWriteLetter' onPress={() => navigation.navigate('WriteLetterPage', { receiverName, selectedIcecream })} ></NextBtn>
+        <NextBtn title='선택완료' type='goToWriteLetter' onPress={() => {
+          if (selectedIcecream) {
+            navigation.navigate('WriteLetterPage', { receiverName, selectedIcecream })
+          } else {
+            Alert.alert("아이스크림을 선택해주세요.")
+          }
+        }} ></NextBtn>
       </View>
     </View>
   );

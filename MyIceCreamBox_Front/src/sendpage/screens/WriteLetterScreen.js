@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { Alert,StyleSheet, View } from 'react-native';
 import BackBtn from '../components/BackBtn';
 import Title from '../components/Title';
 import Explanation from '../components/Explanation';
@@ -46,14 +46,29 @@ const WriteLetterScreen = ({ route }) => {
       </View>
 
       <View style={styles.containerBottom}>
-        <NextBtn title='보내기' type='goToConfigLetter'
-          onPress={() => navigation.navigate('ConfigLetterScreenPage', {
-            receiverName: receiverName,
-            writer: writer,
-            letter: letter,
-            iceType: selectedIcecream,
-          })}></NextBtn>
-        {/* <ConfigBtn title='보내기' onPress={()=>navigation.navigate('WriteLetterPage')} writer = {writer}></ConfigBtn> */}
+      <NextBtn title='보내기' type='goToConfigLetter'
+        onPress={() => {
+            if (!writer.trim() || !letter.trim()) {
+                let missingField = '';
+                if (!writer.trim() && !letter.trim()) {
+                    missingField = '작성자와 내용';
+                } else if (!writer.trim()) {
+                    missingField = '작성자';
+                } else {
+                    missingField = '내용';
+                }
+                Alert.alert(`${missingField}을(를) 입력해주세요.`);
+            } else {
+                navigation.navigate('ConfigLetterScreenPage', {
+                    receiverName: receiverName,
+                    writer: writer,
+                    letter: letter,
+                    iceType: selectedIcecream,
+                });
+            }
+        }}>
+    </NextBtn>
+        
       </View>
     </View>
 
